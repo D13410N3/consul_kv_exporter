@@ -14,12 +14,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// Config represents the YAML configuration format
 type Config struct {
 	DCs map[string]DCConfig `yaml:"dc"`
 }
 
-// DCConfig represents the configuration for a specific data center
 type DCConfig struct {
 	Directories []string `yaml:"directories"`
 }
@@ -102,7 +100,6 @@ func collectMetrics(dc, directory, baseURI string) {
 			continue
 		}
 
-		// Parse the response body as JSON
 		var entries []map[string]interface{}
 		err = json.Unmarshal(body, &entries)
 		if err != nil {
@@ -123,11 +120,9 @@ func collectMetrics(dc, directory, baseURI string) {
 				continue
 			}
 
-			// Add the metric
 			consulKvModifyIndex.WithLabelValues(dc, key).Set(modifyIndex)
 		}
 
-		// Sleep for 5 seconds before fetching the metrics again
 		time.Sleep(5 * time.Second)
 	}
 }
