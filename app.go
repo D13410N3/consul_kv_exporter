@@ -92,9 +92,9 @@ func collectMetrics(dc, directory, baseURI string) {
 			log.Printf("Failed to fetch data for directory '%s' in DC '%s': %v", directory, dc, err)
 			continue
 		}
-		defer resp.Body.Close()
 
 		body, err := ioutil.ReadAll(resp.Body)
+		resp.Body.Close()
 		if err != nil {
 			log.Printf("Failed to read response body for directory '%s' in DC '%s': %v", directory, dc, err)
 			continue
